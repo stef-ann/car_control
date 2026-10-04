@@ -1,0 +1,46 @@
+%% Parameters
+
+m = 2200;
+rho = 1.2;
+Cd = 0.3;
+Af = 2;
+g = 9.81;
+mu = 0.005;
+w = 0.21;
+x0 = 0; % initial velocity
+
+
+%% Equilibrium Conditions
+xo = 0.34; % m/s, speed
+uo = 0.5*rho*Cd*Af*xo^2 + m*g*sin(w) + mu*m*g*cos(w);
+R = 20; % desired speed
+
+
+
+A = -rho*Cd*Af*xo;
+B = 1;
+C = 1;
+D = 0;
+
+
+
+%% Transfer Function
+T = tf(1/m, [1 A]);
+disp(T);
+
+%% KI controller parameters
+zeta = 0.0002;                     % damping ratio
+wn   = 0.003;                        % natural frequency, rad/s
+Kp = m*(2*zeta*wn - A);
+Ki = m*wn^2;
+
+
+
+
+
+
+
+
+%% Tracking MAE
+out = sim("car")
+
